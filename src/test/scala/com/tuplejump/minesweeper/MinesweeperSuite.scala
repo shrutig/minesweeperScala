@@ -16,9 +16,10 @@ class MinesweeperSuite extends FlatSpec with BeforeAndAfter {
     assert(board.isMine(2,2) === true)
   }
 
- /* "Invalid input " should "not be considered " in {
-
-  }*/
+  "Game" should "be won " in {
+    board.setMine(2,2)
+    assert(board.playCell(1,9,9) === 2)
+  }
 
   "Game " should "be over when required" in {
     board.setMine(2,2)
