@@ -1,7 +1,8 @@
 package com.tuplejump.minesweeeper
 
 //grid[][] is the game board in this game
-//In this game, -1 in a grid cell indicates presence of mine, -2 indicates cell not uncovered and >=0 means cell uncovered
+//In this game, -1 in a grid cell indicates presence of mine,
+// -2 indicates cell not uncovered and >=0 means cell uncovered
 class GameBoard(Height: Int, Width: Int) {
 
   private val mine = -1
@@ -64,7 +65,7 @@ class GameBoard(Height: Int, Width: Int) {
         gameStatus = 1
       } else if (isCovered(row, col)) {
         setUncover(row, col)
-        WinStatus = true
+        WinStatus = true//stores true if all cells are uncovered
         for (row <- 0 until boardHeight) {
           for (col <- 0 until boardWidth) {
             if (isCovered(row, col) || isFlag(row, col))
