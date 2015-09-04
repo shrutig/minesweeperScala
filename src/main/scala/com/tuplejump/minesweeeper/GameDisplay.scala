@@ -67,7 +67,7 @@ class GameDisplay {
   }
 
   def getInputCell(choice: Int, height: Int, width: Int) = {
-    var cell = Vector(-1, -1)
+    var cell = Vector(-1, -1) //stores the row and col input by user
     if (choice == 1)
       println(
         "Enter cell with e to uncover it or with flag to unflag it : row col format(starting from 0)")
