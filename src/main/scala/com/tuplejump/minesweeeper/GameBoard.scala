@@ -126,10 +126,10 @@ class GameBoard(Height: Int, Width: Int) {
           setUncover(row - 1, col + sideCount)
         }
       }
-      for (i <- -1 to 1) {
+      for (sideCount <- -1 to 1) {
         // Uncovering lower neighbors
-        if (isValid(row + 1, col + i) && isCovered(row + 1, col + i)) {
-          setUncover(row + 1, col + i)
+        if (isValid(row + 1, col +sideCount) && isCovered(row + 1, col + sideCount)) {
+          setUncover(row + 1, col + sideCount)
         }
       }
       if (isValid(row, col + 1) && isCovered(row, col + 1)) {
