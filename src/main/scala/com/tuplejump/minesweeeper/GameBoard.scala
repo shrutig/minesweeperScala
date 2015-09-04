@@ -45,11 +45,11 @@ class GameBoard(Height: Int, Width: Int) {
   }
 
   def setCoverAll: Unit = {
-    for (i <- 0 until boardHeight) {
-      val a: Vector[Int] = {
-        for (j <- 0 until boardWidth) yield cover
+    for (row <- 0 until boardHeight) {
+      val rows: Vector[Int] = {
+        for (col <- 0 until boardWidth) yield cover
       }.toVector
-      grid = grid ++ Vector(a)
+      grid = grid ++ Vector(rows)
     }
   }
 
@@ -90,19 +90,19 @@ class GameBoard(Height: Int, Width: Int) {
 
   def setUncover(row: Int, col: Int): Unit = {
     var count = 0
-    for (i <- -1 to 1) {
+    for (sideCount <- -1 to 1) {
       // checks the upper neighbors of the current
       // cell for mines
-      if (isValid(row - 1, col + i)) {
-        if (isMine(row - 1, col + i))
+      if (isValid(row - 1, col + sideCount)) {
+        if (isMine(row - 1, col + sideCount))
           count = count + 1
       }
     }
-    for (i <- -1 to 1) {
+    for (sideCount <- -1 to 1) {
       // checks the lower neighbors of the current
       // cell for mines
-      if (isValid(row + 1, col + i)) {
-        if (isMine(row + 1, col + i))
+      if (isValid(row + 1, col + sideCount)) {
+        if (isMine(row + 1, col + sideCount))
           count = count + 1
       }
     }
@@ -120,10 +120,10 @@ class GameBoard(Height: Int, Width: Int) {
     if (count == 0) {
       // if no mines in neighboring cells , then neighboring
       // cells are uncovered
-      for (i <- -1 to 1) {
+      for (sideCount <- -1 to 1) {
         // Uncovering upper neighbors
-        if (isValid(row - 1, col + i) && isCovered(row - 1, col + i)) {
-          setUncover(row - 1, col + i)
+        if (isValid(row - 1, col + sideCount) && isCovered(row - 1, col + sideCount)) {
+          setUncover(row - 1, col + sideCount)
         }
       }
       for (i <- -1 to 1) {
