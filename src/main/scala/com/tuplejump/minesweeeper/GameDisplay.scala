@@ -4,7 +4,7 @@ import Vector._
 import scala.io.StdIn.readLine
 
 class GameDisplay {
-  def displayGameBoard(score: Int, board: GameBoard,gameIndicator:Int) = {
+  def displayGameBoard(score: Int, board: GameBoard, gameIndicator: Int) = {
     if (gameIndicator == 1)
       println("Mine found: Game lost with score :" + score)
     else if (gameIndicator == 2) {
@@ -74,6 +74,7 @@ class GameDisplay {
     else if (choice == 2)
       println("Enter cell with e flag it : row col format(starting from 0)")
     while (cell(0) > height - 1 || cell(0) < 0 || cell(1) > width - 1 || cell(1) < 0) {
+      //runs till valid input from 0 to height/width -1 is received
       val i = readLine().toInt
       val j = readLine().toInt
       cell = cell updated(0, i)

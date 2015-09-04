@@ -1,49 +1,91 @@
 package com.tuplejump.minesweeeper
+
 //grid[][] is the game board in this game
 //In this game, -1 in a grid cell indicates presence of mine, -2 indicates cell not uncovered and >=0 means cell uncovered
 class GameBoard(Height: Int, Width: Int) {
 
-  private var boardHeight: Int = Height
+  private val mine = -1
 
-  private var boardWidth: Int = Width
+  private val cover = -2
+
+  private val flag = -3
+
+  private val boardHeight: Int = Height
+
+  private val boardWidth: Int = Width
 
   private var grid = Vector[Vector[Int]]()
 
-  def getHeight:Int = boardHeight
+  def getHeight: Int = boardHeight
 
-  def getWidth:Int = boardWidth
+  def getWidth: Int = boardWidth
 
-  def getValue(row: Int, col: Int):Int = grid(row)(col)
+  def getValue(row: Int, col: Int): Int = grid(row)(col)
 
-  def isMine(row: Int, col: Int): Boolean = grid(row)(col) == -1
+  def isMine(row: Int, col: Int): Boolean = grid(row)(col) == mine
 
-  def isCovered(row: Int, col: Int): Boolean = grid(row)(col) == -2
+  def isCovered(row: Int, col: Int): Boolean = grid(row)(col) == cover
 
   def isUncovered(row: Int, col: Int): Boolean = grid(row)(col) >= 0
 
-  def isFlag(row: Int, col: Int): Boolean = grid(row)(col) == -3
+  def isFlag(row: Int, col: Int): Boolean = grid(row)(col) == flag
 
   def isValid(row: Int, col: Int): Boolean = row >= 0 && col >= 0 && row < boardHeight && col < boardWidth
 
   def setFlag(row: Int, col: Int) = {
-    grid = grid updated(row, grid(row).updated(col, -3))
+    grid = grid updated(row, grid(row).updated(col, flag))
   }
 
   def setMine(row: Int, col: Int) = {
-    grid = grid updated(row, grid(row).updated(col, -1))
+    grid = grid updated(row, grid(row).updated(col, mine))
   }
 
   def setCover(row: Int, col: Int) = {
-    grid = grid updated(row, grid(row).updated(col, -2))
+    grid = grid updated(row, grid(row).updated(col, cover))
   }
 
   def setCoverAll: Unit = {
     for (i <- 0 until boardHeight) {
       val a: Vector[Int] = {
-        for (j <- 0 until boardWidth) yield -2
+        for (j <- 0 until boardWidth) yield cover
       }.toVector
       grid = grid ++ Vector(a)
     }
+  }
+
+  def playCell(choice: Int, row: Int, col: Int): Int = {
+    var gameStatus = 0
+    // stores 1 if game ended with loss, 2 if game ended
+    // with win and 0 if incomplete
+    var WinStatus: Boolean = false
+    if (choice == 1) {
+      // to uncover cell
+      if (isMine(row, col)) {
+        gameStatus = 1
+      } else if (isCovered(row, col)) {
+        setUncover(row, col)
+        WinStatus = true
+        for (row <- 0 until boardHeight) {
+          for (col <- 0 until boardWidth) {
+            if (isCovered(row, col) || isFlag(row, col))
+              WinStatus = false
+          }
+        }
+        if (WinStatus) {
+          gameStatus = 2
+        }
+      } else if (isFlag(row, col)) {
+        setCover(row, col)
+        gameStatus = 0
+      }
+    } else {
+      // to flag cell
+      if (isCovered(row, col) || isMine(row, col)) {
+        setFlag(row, col)
+        gameStatus = 0
+      }
+    }
+    gameStatus
   }
 
   def setUncover(row: Int, col: Int): Unit = {
@@ -84,19 +126,19 @@ class GameBoard(Height: Int, Width: Int) {
           setUncover(row - 1, col + i)
         }
       }
-    for (i <- -1 to 1) {
-      // Uncovering lower neighbors
-      if (isValid(row + 1, col + i) && isCovered(row + 1, col + i)) {
-        setUncover(row + 1, col + i)
+      for (i <- -1 to 1) {
+        // Uncovering lower neighbors
+        if (isValid(row + 1, col + i) && isCovered(row + 1, col + i)) {
+          setUncover(row + 1, col + i)
+        }
+      }
+      if (isValid(row, col + 1) && isCovered(row, col + 1)) {
+        setUncover(row, col + 1) // uncovers right neighbor
+      }
+      if (isValid(row, col - 1) && isCovered(row, col - 1)) {
+        setUncover(row, col - 1) // uncovers left neighbor
       }
     }
-    if (isValid(row, col + 1) && isCovered(row, col + 1)) {
-      setUncover(row, col + 1) // uncovers right neighbor
-    }
-    if (isValid(row, col - 1) && isCovered(row, col - 1)) {
-      setUncover(row, col - 1) // uncovers left neighbor
-    }
-  }
   }
 
 }
