@@ -4,6 +4,7 @@ import Vector._
 import scala.io.StdIn.readLine
 
 class GameDisplay {
+
   def displayGameBoard(score: Int, board: GameBoard, gameIndicator: Int) = {
     if (gameIndicator == 1)
       println("Mine found: Game lost with score :" + score)
@@ -28,30 +29,18 @@ class GameDisplay {
     }
   }
 
-  def createGameBoard: GameBoard = {
-    var Height = 0
-    var Width = 0
-    while (Height <= 0 || Width <= 0) {
+  def getInputDimension:(Int,Int)={
+    var height = 0
+    var width = 0
+    while (height <= 0 || width <= 0) {
       println("Enter the board height follwed by board Width in the next line")
-      Height = readLine().toInt
-      Width = readLine().toInt
-      if (Width <= 0 || Height <= 0) {
+      height = readLine().toInt
+      width = readLine().toInt
+      if (width <= 0 || height <= 0) {
         System.out.println("invalid input. Enter again")
       }
     }
-    val board: GameBoard = new GameBoard(Height, Width)
-    board.setCoverAll
-    var row = 0
-    var col = 0
-    while (!(row == -1 && col == -1)) {
-      println("Enter the mine: row col format(starting from 0) or -1 -1 to exit")
-      row = readLine().toInt
-      col = readLine().toInt
-      if (board.isValid(row, col)) {
-        board.setMine(row, col)
-      }
-    }
-    board
+    (height,width)
   }
 
   def getInputOption = {

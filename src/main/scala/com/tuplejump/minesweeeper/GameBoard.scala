@@ -3,17 +3,17 @@ package com.tuplejump.minesweeeper
 //grid[][] is the game board in this game
 //In this game, -1 in a grid cell indicates presence of mine,
 // -2 indicates cell not uncovered and >=0 means cell uncovered
-class GameBoard(Height: Int, Width: Int) {
+class GameBoard(height: Int, width: Int) {
 
-  private val mine = -1
+  private val MINE = -1
 
-  private val cover = -2
+  private val COVER = -2
 
-  private val flag = -3
+  private val FLAG = -3
 
-  private val boardHeight: Int = Height
+  private val boardHeight: Int = height
 
-  private val boardWidth: Int = Width
+  private val boardWidth: Int = width
 
   private var grid = Vector[Vector[Int]]()
 
@@ -23,32 +23,32 @@ class GameBoard(Height: Int, Width: Int) {
 
   def getValue(row: Int, col: Int): Int = grid(row)(col)
 
-  def isMine(row: Int, col: Int): Boolean = grid(row)(col) == mine
+  def isMine(row: Int, col: Int): Boolean = grid(row)(col) == MINE
 
-  def isCovered(row: Int, col: Int): Boolean = grid(row)(col) == cover
+  def isCovered(row: Int, col: Int): Boolean = grid(row)(col) == COVER
 
   def isUncovered(row: Int, col: Int): Boolean = grid(row)(col) >= 0
 
-  def isFlag(row: Int, col: Int): Boolean = grid(row)(col) == flag
+  def isFlag(row: Int, col: Int): Boolean = grid(row)(col) == FLAG
 
   def isValid(row: Int, col: Int): Boolean = row >= 0 && col >= 0 && row < boardHeight && col < boardWidth
 
   def setFlag(row: Int, col: Int) = {
-    grid = grid updated(row, grid(row).updated(col, flag))
+    grid = grid updated(row, grid(row).updated(col, FLAG))
   }
 
   def setMine(row: Int, col: Int) = {
-    grid = grid updated(row, grid(row).updated(col, mine))
+    grid = grid updated(row, grid(row).updated(col, MINE))
   }
 
   def setCover(row: Int, col: Int) = {
-    grid = grid updated(row, grid(row).updated(col, cover))
+    grid = grid updated(row, grid(row).updated(col, COVER))
   }
 
   def setCoverAll: Unit = {
     for (row <- 0 until boardHeight) {
       val rows: Vector[Int] = {
-        for (col <- 0 until boardWidth) yield cover
+        for (col <- 0 until boardWidth) yield COVER
       }.toVector
       grid = grid ++ Vector(rows)
     }

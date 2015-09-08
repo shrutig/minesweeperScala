@@ -1,6 +1,6 @@
 package com.tuplejump.minesweeeper
 
-object GameLogic {
+object Minesweeper {
 
   private var board: GameBoard = null
   private var display: GameDisplay = null
@@ -8,7 +8,14 @@ object GameLogic {
 
   def main(args: Array[String]) {
     display = new GameDisplay
-    board = display.createGameBoard
+    val (height,width) = display.getInputDimension
+    board = new GameBoard(height,width)
+    board.setCoverAll
+    val random = scala.util.Random
+    val number = random.nextInt(math.max(height,width))//number of mines
+    for(counter <- 1 until number+1){
+      board.setMine(random.nextInt(height),random.nextInt(width))
+    }
     playGame
   }
 
@@ -21,9 +28,9 @@ object GameLogic {
       display.displayGameBoard(score, board, gameIndicator)
       choice = display.getInputOption // stores 1 if user wants to uncover cell
       // or 2 if user wants to place a flag
-      val c = display.getInputCell(choice, board.getHeight, board.getWidth)
+      val cell = display.getInputCell(choice, board.getHeight, board.getWidth)
       score = score + 1
-      gameIndicator = board.playCell(choice, c(0), c(1))
+      gameIndicator = board.playCell(choice, cell(0), cell(1))
       display.displayGameBoard(score, board, gameIndicator)
     }
   }

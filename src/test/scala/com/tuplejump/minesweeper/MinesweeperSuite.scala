@@ -19,17 +19,17 @@ class MinesweeperSuite extends FlatSpec with BeforeAndAfter {
 
   "Game" should "be won " in {
     board.setMine(2, 2)
-    assert(board.playCell(1, 9, 9) === 2)
+    assert(board.playCell(1, 9, 9) === 2)//1 is the choice and (9,9) is the cell choice
   }
 
   "Game " should "be over when required" in {
     board.setMine(2, 2)
-    assert(board.playCell(1, 2, 2) === 1)
+    assert(board.playCell(1, 2, 2) === 1)//1 is the choice and (2,2) is the cell choice
   }
 
   "Cells " should "be uncovered properly" in {
     board.setMine(2, 2)
-    val status = board.playCell(1, 7, 2)
+    val status = board.playCell(1, 7, 2)//1 is the choice and (7,2) is the cell choice
     assert(board.isUncovered(7,3) === true)
   }
 
