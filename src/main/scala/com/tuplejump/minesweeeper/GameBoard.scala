@@ -11,15 +11,15 @@ class GameBoard(height: Int, width: Int) {
 
   private val FLAG = -3
 
-  private val boardHeight: Int = height
+  private val BOARD_HEIGHT: Int = height
 
-  private val boardWidth: Int = width
+  private val BOARD_WIDTH: Int = width
 
   private var grid = Vector[Vector[Int]]()
 
-  def getHeight: Int = boardHeight
+  def getHeight: Int = BOARD_HEIGHT
 
-  def getWidth: Int = boardWidth
+  def getWidth: Int = BOARD_WIDTH
 
   def getValue(row: Int, col: Int): Int = grid(row)(col)
 
@@ -31,7 +31,7 @@ class GameBoard(height: Int, width: Int) {
 
   def isFlag(row: Int, col: Int): Boolean = grid(row)(col) == FLAG
 
-  def isValid(row: Int, col: Int): Boolean = row >= 0 && col >= 0 && row < boardHeight && col < boardWidth
+  def isValid(row: Int, col: Int): Boolean = row >= 0 && col >= 0 && row < BOARD_HEIGHT && col < BOARD_WIDTH
 
   def setFlag(row: Int, col: Int) = {
     grid = grid updated(row, grid(row).updated(col, FLAG))
@@ -46,9 +46,9 @@ class GameBoard(height: Int, width: Int) {
   }
 
   def setCoverAll: Unit = {
-    for (row <- 0 until boardHeight) {
+    for (row <- 0 until BOARD_HEIGHT) {
       val rows: Vector[Int] = {
-        for (col <- 0 until boardWidth) yield COVER
+        for (col <- 0 until BOARD_WIDTH) yield COVER
       }.toVector
       grid = grid ++ Vector(rows)
     }
@@ -66,8 +66,8 @@ class GameBoard(height: Int, width: Int) {
       } else if (isCovered(row, col)) {
         setUncover(row, col)
         WinStatus = true//stores true if all cells are uncovered
-        for (row <- 0 until boardHeight) {
-          for (col <- 0 until boardWidth) {
+        for (row <- 0 until BOARD_HEIGHT) {
+          for (col <- 0 until BOARD_WIDTH) {
             if (isCovered(row, col) || isFlag(row, col))
               WinStatus = false
           }
