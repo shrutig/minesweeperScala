@@ -11,9 +11,9 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.51-b03, mixed mode)
 ##Project details
 This Minesweeper application in Scala is written to mimic the popular game, Minesweeper.
 
-*This game allows the user to enter board height and board width and creates a game with randomly generated mines. 
-*The game then asks for input of row and col from the user. 
-*The game keeps playing till the user enters a mine cell or all non-mine cells are uncovered.
+* This game allows the user to enter board height and board width and creates a game with randomly generated mines. 
+* The game then asks for input of row and col from the user. 
+* The game keeps playing till the user enters a mine cell or all non-mine cells are uncovered.
 
 ##Project run and test details
 The MinesweeperSuite.scala file has tests for this program.Run this file by :
